@@ -1,10 +1,11 @@
+import ChatArea from "@/components/chat-area"
 import { SiteHeader } from "@/components/site-header"
 
 export default function IndexPage() {
   return (
-    <main>
+    <main className="flex h-screen flex-col">
       <SiteHeader />
-      <h1>Index Page</h1>
+      <ChatArea />
     </main>
   )
 }
