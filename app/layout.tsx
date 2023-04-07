@@ -2,7 +2,8 @@ import "./globals.css"
 import { Inter as FontSans } from "next/font/google"
 
 import { cn } from "@/lib/utils"
-import { SiteHeader } from "@/components/site-header"
+import { ScrollArea } from "@/components/scroll-area"
+import SideSearch from "@/components/side-search"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -33,11 +34,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex min-h-screen flex-col">
-            <SiteHeader />
-            <main className="flex-1 items-start md:grid md:grid-cols-[6rem_minmax(0,1fr)] md:gap-6 lg:grid-cols-[6rem_minmax(0,1fr)] lg:gap-10">
-              <div>sidearea</div>
+            <div className="flex-1 items-start md:grid md:grid-cols-[24rem_minmax(0,1fr)] lg:grid-cols-[24rem_minmax(0,1fr)]">
+              <aside className="fixed top-14 z-30 hidden h-screen shrink-0 overflow-y-auto bg-slate-200 dark:bg-gray-700 md:sticky md:block">
+                <ScrollArea>
+                  <SideSearch />
+                </ScrollArea>
+              </aside>
               {children}
-            </main>
+            </div>
           </div>
           <TailwindIndicator />
         </ThemeProvider>

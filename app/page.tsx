@@ -1,7 +1,10 @@
+import { SiteHeader } from "@/components/site-header"
+
 export default function IndexPage() {
   return (
-    <div>
+    <main>
+      <SiteHeader />
       <h1>Index Page</h1>
-    </div>
+    </main>
   )
 }
