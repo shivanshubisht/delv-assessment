@@ -1,4 +1,4 @@
-import { type SearchResults } from "@/types/results"
+import { type SearchResponse } from "@/types/search"
 // @ts-expect-error no type-defs found
 import SerpApi from "google-search-results-nodejs"
 
@@ -19,11 +19,12 @@ export async function POST(request: Request) {
 
   function searchAsync(params: ParamsType) {
     return new Promise((resolve, reject) => {
-      search.json(params, (data: SearchResults) => {
+      search.json(params, (data: SearchResponse) => {
+        console.log(data)
         resolve(data)
       })
     })
   }
-  const data = (await searchAsync(params)) as SearchResults
+  const data = (await searchAsync(params)) as SearchResponse
   return new Response(JSON.stringify(data["organic_results"]))
 }

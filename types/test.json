@@ -1,0 +1,89 @@
+{
+  "search_metadata": {
+    "id": "6430cf3bc7ad4174a8c509a8",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/95a35f1c57ec1ccf/6430cf3bc7ad4174a8c509a8.json",
+    "created_at": "2023-04-08 02:19:39 UTC",
+    "processed_at": "2023-04-08 02:19:39 UTC",
+    "google_scholar_url": "https://scholar.google.com/scholar?q=physics&hl=en",
+    "raw_html_file": "https://serpapi.com/searches/95a35f1c57ec1ccf/6430cf3bc7ad4174a8c509a8.html",
+    "total_time_taken": 0.58
+  },
+  "search_parameters": {
+    "engine": "google_scholar",
+    "q": "physics",
+    "hl": "en"
+  },
+  "search_information": {
+    "organic_results_state": "Results for exact spelling",
+    "total_results": 5980000,
+    "time_taken_displayed": 0.03,
+    "query_displayed": "physics"
+  },
+  "organic_results": [],
+  "related_searches": [
+    {
+      "query": "applied physics",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=1&q=applied+physics&qst=ib"
+    },
+    {
+      "query": "chemistry physics",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=2&q=chemistry+physics&qst=ib"
+    },
+    {
+      "query": "high energy physics",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=3&q=high+energy+physics&qst=ib"
+    },
+    {
+      "query": "solid state physics",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=4&q=solid+state+physics&qst=ib"
+    },
+    {
+      "query": "condensed matter physics",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=5&q=condensed+matter+physics&qst=ib"
+    },
+    {
+      "query": "physics crc",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=6&q=physics+crc&qst=ib"
+    },
+    {
+      "query": "001 exact sciences physics",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=7&q=001+exact+sciences+physics&qst=ib"
+    },
+    {
+      "query": "physics sciences and technology",
+      "link": "https://scholar.google.com/scholar?hl=en&as_sdt=0,44&qsp=8&q=physics+sciences+and+technology&qst=ib"
+    }
+  ],
+  "pagination": {
+    "current": 1,
+    "next": "https://scholar.google.com/scholar?start=10&q=physics&hl=en&as_sdt=0,44",
+    "other_pages": {
+      "2": "https://scholar.google.com/scholar?start=10&q=physics&hl=en&as_sdt=0,44",
+      "3": "https://scholar.google.com/scholar?start=20&q=physics&hl=en&as_sdt=0,44",
+      "4": "https://scholar.google.com/scholar?start=30&q=physics&hl=en&as_sdt=0,44",
+      "5": "https://scholar.google.com/scholar?start=40&q=physics&hl=en&as_sdt=0,44",
+      "6": "https://scholar.google.com/scholar?start=50&q=physics&hl=en&as_sdt=0,44",
+      "7": "https://scholar.google.com/scholar?start=60&q=physics&hl=en&as_sdt=0,44",
+      "8": "https://scholar.google.com/scholar?start=70&q=physics&hl=en&as_sdt=0,44",
+      "9": "https://scholar.google.com/scholar?start=80&q=physics&hl=en&as_sdt=0,44",
+      "10": "https://scholar.google.com/scholar?start=90&q=physics&hl=en&as_sdt=0,44"
+    }
+  },
+  "serpapi_pagination": {
+    "current": 1,
+    "next_link": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=10",
+    "next": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=10",
+    "other_pages": {
+      "2": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=10",
+      "3": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=20",
+      "4": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=30",
+      "5": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=40",
+      "6": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=50",
+      "7": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=60",
+      "8": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=70",
+      "9": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=80",
+      "10": "https://serpapi.com/search.json?as_sdt=0%2C44&engine=google_scholar&hl=en&q=physics&start=90"
+    }
+  }
+}

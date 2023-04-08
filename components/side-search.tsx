@@ -54,6 +54,7 @@ export default function SideSearch() {
         </form>
       </div>
       <ScrollArea className="p-5">
+        {JSON.stringify(results)}
         {results !== null ? <ResultItems items={results} pathname="" /> : null}
       </ScrollArea>
     </>
@@ -74,7 +75,7 @@ export function ResultItems({ items, pathname }: ResultProps) {
             key={index}
             href={item.link}
             className={cn(
-              "group flex w-full items-center rounded-md px-4 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800",
+              "group flex w-full flex-col items-baseline gap-1 rounded-md px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800",
               {
                 "bg-slate-100 dark:bg-slate-800": pathname === item.link,
               }
@@ -82,13 +83,6 @@ export function ResultItems({ items, pathname }: ResultProps) {
             target="_blank"
             rel="noreferrer"
           >
-            <div
-              className={buttonVariants({
-                size: "sm",
-                variant: "ghost",
-                className: "pr-4 text-slate-700 dark:text-slate-400",
-              })}
-            ></div>
             {item.title}
             {item.snippet && (
               <span className="ml-2 rounded-md bg-teal-100 px-1.5 py-0.5 text-xs no-underline group-hover:no-underline dark:text-slate-900">
