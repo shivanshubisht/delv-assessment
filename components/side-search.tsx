@@ -1,10 +1,43 @@
+"use client"
+
+import { useRef, useState, type FormEvent } from "react"
+import Link from "next/link"
+import { type SearchResults } from "@/types/results"
+
+import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/scroll-area"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export default function SideSearch() {
+  const messageRef = useRef<HTMLInputElement>(null)
+  const [results, setResults] = useState<SearchResults | null>(null)
+  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault()
+  //   console.log(messageRef.current?.value)
+  // }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const responseResults = (await (
+      await fetch("/api/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: messageRef.current?.value,
+        }),
+      })
+    ).json()) as SearchResults
+    setResults(responseResults)
+    console.log(responseResults)
+  }
   return (
     <>
-      <div className="bg-gray-950/70 p-5">
+      {/* <div className="bg-gray-300/70 p-5 dark:bg-gray-950/70"> */}
+      <div className="p-5">
         <span className="hidden text-3xl font-semibold sm:inline-block">
           Search
         </span>
@@ -12,64 +45,66 @@ export default function SideSearch() {
         <span className="hidden pb-4 text-sm sm:inline-block">
           Search for articles in google scholar
         </span>
-        <Input type="search" placeholder="Search for articles" />
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <form onSubmit={handleSubmit}>
+          <div className="flex w-full max-w-sm items-center space-x-2">
+            <Input type="search" placeholder="Search" ref={messageRef} />
+            <Button type="submit">Search</Button>
+          </div>
+        </form>
       </div>
       <ScrollArea className="p-5">
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
-        results
-        <br />
+        {results !== null ? <ResultItems items={results} pathname="" /> : null}
       </ScrollArea>
     </>
   )
+}
+
+interface ResultProps {
+  items: SearchResults
+  pathname: string | null
+}
+
+export function ResultItems({ items, pathname }: ResultProps) {
+  return items?.length ? (
+    <div className="grid grid-flow-row auto-rows-max text-sm">
+      {items.map((item, index) =>
+        item.link ? (
+          <Link
+            key={index}
+            href={item.link}
+            className={cn(
+              "group flex w-full items-center rounded-md px-4 py-1.5 hover:bg-slate-50 dark:hover:bg-slate-800",
+              {
+                "bg-slate-100 dark:bg-slate-800": pathname === item.link,
+              }
+            )}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <div
+              className={buttonVariants({
+                size: "sm",
+                variant: "ghost",
+                className: "pr-4 text-slate-700 dark:text-slate-400",
+              })}
+            ></div>
+            {item.title}
+            {item.snippet && (
+              <span className="ml-2 rounded-md bg-teal-100 px-1.5 py-0.5 text-xs no-underline group-hover:no-underline dark:text-slate-900">
+                {item.snippet}
+              </span>
+            )}
+          </Link>
+        ) : (
+          <span
+            key={index}
+            className="flex w-full cursor-not-allowed items-center rounded-md p-2 opacity-60 hover:underline"
+          >
+            {item.title}
+          </span>
+        )
+      )}
+    </div>
+  ) : null
 }
