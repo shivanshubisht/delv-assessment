@@ -20,7 +20,6 @@ export async function POST(request: Request) {
   function searchAsync(params: ParamsType) {
     return new Promise((resolve, reject) => {
       search.json(params, (data: SearchResponse) => {
-        console.log(data)
         resolve(data)
       })
     })

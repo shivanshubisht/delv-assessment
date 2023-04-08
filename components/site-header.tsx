@@ -3,7 +3,7 @@ import { ModeToggle } from "@/components/mode-toggle"
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 w-full shadow-2xl">
+    <header className="sticky top-0 z-40 w-full bg-gray-300 shadow-2xl dark:bg-gray-700/60">
       <div className="flex h-16 items-center">
         {/* <div className="container mx-auto flex items-center justify-between space-x-4 px-4 sm:px-6 md:px-8"> */}
         <div className="container flex">

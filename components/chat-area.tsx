@@ -5,7 +5,7 @@ export default function ChatArea() {
     <>
       <h1 className="h-full">Index Page</h1>
       {/* <div className="px-10 py-5"> */}
-      <div className="bg-gray-700/60">
+      <div className="bg-gray-300 dark:bg-gray-700/60">
         <form className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:my-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
           <div className="relative flex w-full grow flex-col rounded-md bg-white py-2 shadow-md dark:bg-gray-700 dark:text-white md:py-3 md:pl-4">
             <Textarea placeholder="Send a message..." />

@@ -54,7 +54,6 @@ export default function SideSearch() {
         </form>
       </div>
       <ScrollArea className="p-5">
-        {JSON.stringify(results)}
         {results !== null ? <ResultItems items={results} pathname="" /> : null}
       </ScrollArea>
     </>
