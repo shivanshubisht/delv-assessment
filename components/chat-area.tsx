@@ -3,10 +3,10 @@
 import { useRef, useState } from "react"
 
 import { Textarea } from "@/components/ui/textarea"
+import Message from "./message"
 
 export default function ChatArea() {
   const messageRef = useRef<HTMLTextAreaElement | null>(null)
-  // const [response, setMessage] = useState<string[]>([])
   const [message, setMessage] = useState<
     {
       query: string
@@ -31,7 +31,10 @@ export default function ChatArea() {
     const prompt = messageRef.current?.value
     if (prompt !== undefined) {
       setMessage([...message, { query: prompt, response: null }])
-      messageRef.current!.value = ""
+      // if (messageRef.current) {
+      //   messageRef.current.value = ""
+      // }
+      messageRef.current?.value ?? ""
     }
 
     if (!prompt) {
@@ -83,12 +86,25 @@ export default function ChatArea() {
   return (
     <>
       <div className="h-full">
-        {message.map((item, index) => (
-          <div key={index}>
-            <p>{item.query}</p>
-            <p>{item.response}</p>
+        {/* if message is empty display ask here */}
+        {message.length === 0 ? (
+          <div className="flex h-full flex-col items-center justify-center">
+            <h1 className="text-2xl font-bold text-gray-600 dark:text-gray-300">
+              Ask me anything!
+            </h1>
+            <p className="text-gray-600 dark:text-gray-300">
+              Try searching for articles on the sidebar and ask me about the
+              results.
+            </p>
           </div>
-        ))}
+        ) : (
+          message.map((item) => (
+            <>
+              <Message type="query">{item.query}</Message>
+              <Message type="response">{item.response}</Message>
+            </>
+          ))
+        )}
       </div>
       {/* <div className="px-10 py-5"> */}
       <div className="bg-gray-300 dark:bg-gray-700/60">
