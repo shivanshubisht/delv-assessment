@@ -1,7 +1,7 @@
 import { OpenAIStream, type OpenAIStreamPayload } from "@/utils/openai-stream"
 
 type RequestData = {
-  message: string
+  prompt: string
 }
 
 if (!process.env.OPENAI_API_KEY) {
@@ -11,17 +11,17 @@ if (!process.env.OPENAI_API_KEY) {
 export const runtime = "edge"
 
 export async function POST(request: Request) {
-  const { message } = (await request.json()) as RequestData
+  const { prompt } = (await request.json()) as RequestData
 
-  console.log(message)
+  console.log(prompt)
 
-  if (!message) {
-    return new Response("No message in the request", { status: 400 })
+  if (!prompt) {
+    return new Response("No prompt in the request", { status: 400 })
   }
 
   const payload: OpenAIStreamPayload = {
     model: "gpt-3.5-turbo",
-    messages: [{ role: "user", content: message }],
+    messages: [{ role: "user", content: prompt }],
     temperature: 0.7,
     top_p: 1,
     frequency_penalty: 0,

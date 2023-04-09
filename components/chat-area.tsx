@@ -5,8 +5,14 @@ import { useRef, useState } from "react"
 import { Textarea } from "@/components/ui/textarea"
 
 export default function ChatArea() {
-  const messageInput = useRef<HTMLTextAreaElement | null>(null)
-  const [response, setResponse] = useState<string[]>([])
+  const messageRef = useRef<HTMLTextAreaElement | null>(null)
+  // const [response, setMessage] = useState<string[]>([])
+  const [message, setMessage] = useState<
+    {
+      query: string
+      response: string | null
+    }[]
+  >([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleEnter = (
@@ -22,13 +28,14 @@ export default function ChatArea() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const message = messageInput.current?.value
-    if (message !== undefined) {
-      setResponse((prev) => [...prev, message])
-      messageInput.current!.value = ""
+    const prompt = messageRef.current?.value
+    // const newData = { query: prompt, response: null }
+    if (prompt !== undefined) {
+      setMessage([...message, { query: prompt, response: null }])
+      messageRef.current!.value = ""
     }
 
-    if (!message) {
+    if (!prompt) {
       return
     }
 
@@ -38,7 +45,7 @@ export default function ChatArea() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message,
+        prompt,
       }),
     })
     console.log("Edge function returned.")
@@ -58,7 +65,7 @@ export default function ChatArea() {
     const decoder = new TextDecoder()
     let done = false
 
-    setResponse((prev) => [...prev, message])
+    setMessage([...message, { query: prompt, response: null }])
 
     let currentResponse: string[] = []
     while (!done) {
@@ -66,16 +73,17 @@ export default function ChatArea() {
       done = doneReading
       const chunkValue = decoder.decode(value)
       currentResponse = [...currentResponse, chunkValue]
-      setResponse((prev) => [...prev.slice(0, -1), currentResponse.join("")])
+      setMessage([
+        ...message,
+        { query: prompt, response: currentResponse.join("") },
+      ])
     }
-    // breaks text indent on refresh due to streaming
-    // localStorage.setItem('response', JSON.stringify(currentResponse));
     setIsLoading(false)
   }
 
   return (
     <>
-      <div className="h-full">{response}</div>
+      <div className="h-full">{JSON.stringify(message)}</div>
       {/* <div className="px-10 py-5"> */}
       <div className="bg-gray-300 dark:bg-gray-700/60">
         <form
@@ -86,7 +94,7 @@ export default function ChatArea() {
           <div className="relative flex w-full grow flex-col rounded-md bg-white py-2 shadow-md dark:bg-gray-700 dark:text-white md:py-3 md:pl-4">
             <Textarea
               placeholder="Send a message..."
-              ref={messageInput}
+              ref={messageRef}
               onKeyDown={handleEnter}
             />
             <button className="absolute bottom-1.5 right-1 rounded-md p-1 text-gray-500 hover:bg-gray-100 disabled:opacity-40 disabled:hover:bg-transparent dark:hover:bg-gray-900 enabled:dark:hover:text-gray-400 dark:disabled:hover:bg-transparent md:bottom-2.5 md:right-2">
