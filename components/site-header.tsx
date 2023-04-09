@@ -8,7 +8,7 @@ export function SiteHeader() {
         {/* <div className="container mx-auto flex items-center justify-between space-x-4 px-4 sm:px-6 md:px-8"> */}
         <div className="container flex">
           <MainNav />
-          <div className="flex flex-1 items-center justify-between space-x-2 sm:space-x-4 md:justify-end">
+          <div className="flex flex-1 items-center justify-end space-x-2 sm:space-x-4">
             <nav className="flex items-center space-x-1">
               <ModeToggle />
             </nav>

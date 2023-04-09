@@ -6,12 +6,15 @@ import { type SearchResults } from "@/types/results"
 
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/scroll-area"
+import { useSearchData } from "@/components/search-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export default function SideSearch() {
   const messageRef = useRef<HTMLInputElement>(null)
   const [results, setResults] = useState<SearchResults | null>(null)
+  const [data, setData] = useSearchData()
+
   // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
   //   e.preventDefault()
   //   console.log(messageRef.current?.value)
@@ -32,7 +35,9 @@ export default function SideSearch() {
       })
     ).json()) as SearchResults
     setResults(responseResults)
-    console.log(responseResults)
+    setData(responseResults)
+    localStorage.setItem("searchResults", JSON.stringify(responseResults))
+    // console.log(responseResults)
   }
   return (
     <>

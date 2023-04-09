@@ -10,10 +10,10 @@ import { NavigationMenuLink } from "@/components/ui/navigation-menu"
 
 export function MainNav() {
   return (
-    <div className="hidden items-center md:flex">
+    <div className="flex items-center">
       <Link href="/" className="z-0 mr-6 flex items-center space-x-2">
         <Icons.logo className="h-6 w-6" />
-        <span className="hidden text-lg font-bold sm:inline-block">
+        <span className="text-lg font-bold sm:inline-block">
           {siteConfig.name}
         </span>
       </Link>

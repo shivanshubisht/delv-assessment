@@ -1,9 +1,13 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
+import { type SearchResults } from "@/types/results"
 
+import Message from "@/components/message"
+import { ScrollArea } from "@/components/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
-import Message from "./message"
+import { useSearchData } from "./search-context"
+import { Button } from "./ui/button"
 
 export default function ChatArea() {
   const messageRef = useRef<HTMLTextAreaElement | null>(null)
@@ -13,7 +17,23 @@ export default function ChatArea() {
       response: string | null
     }[]
   >([])
+  const [searchResponse, setSearchResponse] = useState<SearchResults | null>(
+    null
+  )
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  // can use useSWR instead of useEffect to fetch searchResults from localStorage because only of initial mount like done in chatgpt
+
+  // hacky way to fetch searchResults from localStorage without rerendering down the component tree
+  // useEffect(() => {
+  //   const searchResults = localStorage.getItem("searchResults")
+  //   // console.log(searchResults)
+  //   if (searchResults) {
+  //     // const results = JSON.parse(searchResults) as SearchResults
+  //     setSearchResponse(JSON.parse(searchResults) as SearchResults)
+  //     console.log(searchResponse)
+  //   }
+  // }, [])
 
   const handleEnter = (
     e: React.KeyboardEvent<HTMLTextAreaElement> &
@@ -28,13 +48,29 @@ export default function ChatArea() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // // fetch searchResults from localStorage
+    // const searchResults = localStorage.getItem("searchResults")
+    // // console.log(searchResults)
+    // if (searchResults) {
+    //   // const results = JSON.parse(searchResults) as SearchResults
+    //   setSearchResponse(JSON.parse(searchResults) as SearchResults)
+    //   console.log(searchResponse)
+
+    //   // get title and snippets from searchResponse
+    //   const titles = searchResponse?.map((item) => item.title)
+    //   console.log(titles)
+    //   const snippets = searchResponse?.map((item) => item.snippet)
+    //   console.log(snippets)
+    // }
+
     const prompt = messageRef.current?.value
     if (prompt !== undefined) {
       setMessage([...message, { query: prompt, response: null }])
-      // if (messageRef.current) {
-      //   messageRef.current.value = ""
-      // }
-      messageRef.current?.value ?? ""
+      if (messageRef.current) {
+        messageRef.current.value = ""
+      }
+      // messageRef.current?.value ?? ""
     }
 
     if (!prompt) {
@@ -83,9 +119,13 @@ export default function ChatArea() {
     setIsLoading(false)
   }
 
+  const [data, setData] = useSearchData()
+
+  console.log(data)
+
   return (
     <>
-      <div className="h-full">
+      <ScrollArea>
         {/* if message is empty display ask here */}
         {message.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center">
@@ -98,14 +138,14 @@ export default function ChatArea() {
             </p>
           </div>
         ) : (
-          message.map((item) => (
-            <>
+          message.map((item, index) => (
+            <Fragment key={index}>
               <Message type="query">{item.query}</Message>
               <Message type="response">{item.response}</Message>
-            </>
+            </Fragment>
           ))
         )}
-      </div>
+      </ScrollArea>
       {/* <div className="px-10 py-5"> */}
       <div className="bg-gray-300 dark:bg-gray-700/60">
         <form

@@ -2,6 +2,7 @@ import "./globals.css"
 import { Inter as FontSans } from "next/font/google"
 
 import { cn } from "@/lib/utils"
+import { SearchDataProvider } from "@/components/search-context"
 import SideSearch from "@/components/side-search"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -34,10 +35,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex min-h-screen flex-col">
             <div className="flex-1 items-start md:grid md:grid-cols-[24rem_minmax(0,1fr)] lg:grid-cols-[24rem_minmax(0,1fr)]">
-              <aside className="dark:blue-50 fixed top-14 z-30 hidden h-screen shrink-0 overflow-y-auto bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:via-gray-800 dark:to-slate-900 md:sticky md:flex md:flex-col">
-                <SideSearch />
-              </aside>
-              {children}
+              <SearchDataProvider initialData={null}>
+                <aside className="dark:blue-50 fixed top-14 z-30 hidden h-screen shrink-0 overflow-y-auto bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:via-gray-800 dark:to-slate-900 md:sticky md:flex md:flex-col">
+                  <SideSearch />
+                </aside>
+                {children}
+              </SearchDataProvider>
             </div>
           </div>
           <TailwindIndicator />
