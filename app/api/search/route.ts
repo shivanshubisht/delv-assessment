@@ -9,7 +9,7 @@ type ParamsType = {
 
 export async function POST(request: Request) {
   const { query } = await request.json()
-  console.log(query)
+  // console.log(query)
   const search = new SerpApi.GoogleSearch(process.env.SERP_API_KEY)
 
   const params = {
