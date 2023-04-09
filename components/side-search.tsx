@@ -6,7 +6,7 @@ import { type SearchResults } from "@/types/results"
 
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/scroll-area"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export default function SideSearch() {

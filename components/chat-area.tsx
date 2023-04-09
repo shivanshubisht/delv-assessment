@@ -29,7 +29,6 @@ export default function ChatArea() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const prompt = messageRef.current?.value
-    // const newData = { query: prompt, response: null }
     if (prompt !== undefined) {
       setMessage([...message, { query: prompt, response: null }])
       messageRef.current!.value = ""
@@ -83,7 +82,14 @@ export default function ChatArea() {
 
   return (
     <>
-      <div className="h-full">{JSON.stringify(message)}</div>
+      <div className="h-full">
+        {message.map((item, index) => (
+          <div key={index}>
+            <p>{item.query}</p>
+            <p>{item.response}</p>
+          </div>
+        ))}
+      </div>
       {/* <div className="px-10 py-5"> */}
       <div className="bg-gray-300 dark:bg-gray-700/60">
         <form
