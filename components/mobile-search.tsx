@@ -22,7 +22,7 @@ import {
 export function MobileSearch() {
   const messageRef = useRef<HTMLInputElement>(null)
   const [results, setResults] = useState<SearchResults | null>(null)
-  const [data, setData] = useSearchData()
+  const [, setData] = useSearchData()
 
   // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
   //   e.preventDefault()

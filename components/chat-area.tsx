@@ -1,7 +1,6 @@
 "use client"
 
-import { Fragment, useEffect, useRef, useState } from "react"
-import { type SearchResults } from "@/types/results"
+import { Fragment, useRef, useState } from "react"
 
 import Message from "@/components/message"
 import { ScrollArea } from "@/components/scroll-area"
@@ -16,7 +15,7 @@ export default function ChatArea() {
       response: string | null
     }[]
   >([])
-  const [data, setData] = useSearchData()
+  const [data] = useSearchData()
   console.log(data)
 
   // useEffect(() => {

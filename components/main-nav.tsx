@@ -24,7 +24,8 @@ export function MainNav() {
 const ListItem = React.forwardRef<
   React.ElementRef<typeof Link>,
   React.ComponentPropsWithoutRef<typeof Link>
->(({ className, title, children, href, ...props }, ref) => {
+>(({ className, title, children, href, ...props }) => {
+  // >(({ className, title, children, href, ...props }, ref) => {
   return (
     <li>
       <Link href={href} passHref legacyBehavior {...props}>

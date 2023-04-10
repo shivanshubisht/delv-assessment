@@ -18,7 +18,7 @@ export async function POST(request: Request) {
   } as const
 
   function searchAsync(params: ParamsType) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       search.json(params, (data: SearchResponse) => {
         resolve(data)
       })

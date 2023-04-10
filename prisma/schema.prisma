@@ -4,10 +4,12 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
+
 model Account {
   id                String   @id @default(cuid())
   userId            String
@@ -51,6 +53,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
+
   @@map(name: "users")
 }
 
