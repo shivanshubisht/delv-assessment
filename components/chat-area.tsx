@@ -1,13 +1,12 @@
 "use client"
 
-import { Fragment, useEffect, useRef, useState } from "react"
-import { type SearchResults } from "@/types/results"
+import { Fragment, useRef, useState } from "react"
 
 import Message from "@/components/message"
 import { ScrollArea } from "@/components/scroll-area"
+import { useSearchData } from "@/components/search-context"
 import { Textarea } from "@/components/ui/textarea"
-import { useSearchData } from "./search-context"
-import { Button } from "./ui/button"
+import SideSearch from "./side-search"
 
 export default function ChatArea() {
   const messageRef = useRef<HTMLTextAreaElement | null>(null)
@@ -17,9 +16,12 @@ export default function ChatArea() {
       response: string | null
     }[]
   >([])
-  const [searchResponse, setSearchResponse] = useState<SearchResults | null>(
-    null
-  )
+
+  const [searchData, setSearchData] = useSearchData()
+
+  // const [searchResponse, setSearchResponse] = useState<SearchResults | null>(
+  //   null
+  // )
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   // can use useSWR instead of useEffect to fetch searchResults from localStorage because only of initial mount like done in chatgpt
@@ -64,16 +66,21 @@ export default function ChatArea() {
     //   console.log(snippets)
     // }
 
-    const prompt = messageRef.current?.value
-    if (prompt !== undefined) {
-      setMessage([...message, { query: prompt, response: null }])
+    const titles = searchData?.map((item) => item.title)
+    const snippets = searchData?.map((item) => item.snippet)
+
+    const prompt = `You are given 10 articles with following titles ${titles} and following ${snippets} respectively. Try answering the following questions using the above data ${messageRef.current?.value}. If the above data is not sufficient to answer the question, you can do anything to answer the question.`
+
+    const initialPrompt = messageRef.current?.value
+    if (initialPrompt !== undefined) {
+      setMessage([...message, { query: initialPrompt, response: null }])
       if (messageRef.current) {
         messageRef.current.value = ""
       }
       // messageRef.current?.value ?? ""
     }
 
-    if (!prompt) {
+    if (!initialPrompt) {
       return
     }
 
@@ -103,7 +110,7 @@ export default function ChatArea() {
     const decoder = new TextDecoder()
     let done = false
 
-    setMessage([...message, { query: prompt, response: null }])
+    setMessage([...message, { query: initialPrompt, response: null }])
 
     let currentResponse: string[] = []
     while (!done) {
@@ -113,39 +120,40 @@ export default function ChatArea() {
       currentResponse = [...currentResponse, chunkValue]
       setMessage([
         ...message,
-        { query: prompt, response: currentResponse.join("") },
+        { query: initialPrompt, response: currentResponse.join("") },
       ])
     }
     setIsLoading(false)
   }
 
-  const [data, setData] = useSearchData()
-
-  console.log(data)
-
   return (
-    <>
-      <ScrollArea>
-        {/* if message is empty display ask here */}
-        {message.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center">
-            <h1 className="text-2xl font-bold text-gray-600 dark:text-gray-300">
-              Ask me anything!
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              Try searching for articles on the sidebar and ask me about the
-              results.
-            </p>
-          </div>
-        ) : (
-          message.map((item, index) => (
-            <Fragment key={index}>
-              <Message type="query">{item.query}</Message>
-              <Message type="response">{item.response}</Message>
-            </Fragment>
-          ))
-        )}
-      </ScrollArea>
+    <div className="flex h-full flex-col justify-between">
+      <aside className=" flex flex-col items-center justify-center overflow-y-auto bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:via-gray-800 dark:to-slate-900 md:hidden ">
+        <SideSearch />
+      </aside>
+      <div className="flex flex-1 items-center justify-center">
+        <ScrollArea className={`${message.length === 0 ? "" : "flex flex-1"}`}>
+          {/* if message is empty display ask here */}
+          {message.length === 0 ? (
+            <div className="flex h-full flex-col items-center justify-center">
+              <h1 className="text-2xl font-bold text-gray-600 dark:text-gray-300">
+                Ask me anything!
+              </h1>
+              <p className="p-4 text-center text-gray-600 dark:text-gray-300">
+                Try searching for articles on the sidebar and ask me about the
+                results.
+              </p>
+            </div>
+          ) : (
+            message.map((item, index) => (
+              <Fragment key={index}>
+                <Message type="query">{item.query}</Message>
+                <Message type="response">{item.response}</Message>
+              </Fragment>
+            ))
+          )}
+        </ScrollArea>
+      </div>
       {/* <div className="px-10 py-5"> */}
       <div className="bg-gray-300 dark:bg-gray-700/60">
         <form
@@ -153,7 +161,7 @@ export default function ChatArea() {
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={handleSubmit}
         >
-          <div className="relative flex w-full grow flex-col rounded-md bg-white py-2 shadow-md dark:bg-gray-700 dark:text-white md:py-3 md:pl-4">
+          <div className="relative m-4 flex w-full grow flex-col rounded-md bg-white py-2 shadow-md dark:bg-gray-700 dark:text-white md:m-0 md:py-3 md:pl-4">
             <Textarea
               placeholder="Send a message..."
               ref={messageRef}
@@ -179,6 +187,6 @@ export default function ChatArea() {
           </div>
         </form>
       </div>
-    </>
+    </div>
   )
 }

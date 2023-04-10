@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/site-header"
 
 export default function IndexPage() {
   return (
-    <main className="flex h-screen flex-col justify-between">
+    <main className="flex h-screen flex-col">
       <SiteHeader />
       <ChatArea />
     </main>

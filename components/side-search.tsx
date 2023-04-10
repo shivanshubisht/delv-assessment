@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input"
 export default function SideSearch() {
   const messageRef = useRef<HTMLInputElement>(null)
   const [results, setResults] = useState<SearchResults | null>(null)
-  const [data, setData] = useSearchData()
+  const [searchData, setSearchData] = useSearchData()
 
   // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
   //   e.preventDefault()
@@ -35,7 +35,7 @@ export default function SideSearch() {
       })
     ).json()) as SearchResults
     setResults(responseResults)
-    setData(responseResults)
+    setSearchData(responseResults)
     localStorage.setItem("searchResults", JSON.stringify(responseResults))
     // console.log(responseResults)
   }
@@ -43,9 +43,7 @@ export default function SideSearch() {
     <>
       {/* <div className="bg-gray-300/70 p-5 dark:bg-gray-950/70"> */}
       <div className="p-5">
-        <span className="hidden text-3xl font-semibold sm:inline-block">
-          Search
-        </span>
+        <span className="inline-block pb-2 text-3xl font-semibold">Search</span>
         <br></br>
         <span className="hidden pb-4 text-sm sm:inline-block">
           Search for articles in google scholar
@@ -58,7 +56,7 @@ export default function SideSearch() {
           </div>
         </form>
       </div>
-      <ScrollArea className="p-5">
+      <ScrollArea className="h-36 p-5 md:h-auto">
         {results !== null ? <ResultItems items={results} pathname="" /> : null}
       </ScrollArea>
     </>

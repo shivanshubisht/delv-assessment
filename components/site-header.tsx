@@ -1,5 +1,11 @@
+import Link from "next/link"
+
+import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ModeToggle } from "@/components/mode-toggle"
+import { buttonVariants } from "@/components/ui/button"
 
 export function SiteHeader() {
   return (
@@ -9,7 +15,15 @@ export function SiteHeader() {
         <div className="container flex">
           <MainNav />
           <div className="flex flex-1 items-center justify-end space-x-2 sm:space-x-4">
-            <nav className="flex items-center space-x-1">
+            <nav className="flex items-center space-x-3">
+              <Link
+                target="_blank"
+                rel="noreferrer"
+                href={siteConfig.links.github}
+                className={cn(buttonVariants)}
+              >
+                <Icons.gitHub className="h-6 w-6" />
+              </Link>
               <ModeToggle />
             </nav>
           </div>
