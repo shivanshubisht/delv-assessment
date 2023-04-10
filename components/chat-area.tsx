@@ -15,19 +15,8 @@ export default function ChatArea() {
       response: string | null
     }[]
   >([])
-  const [data] = useSearchData()
-  console.log(data)
 
-  // useEffect(() => {
-  //   const message = localStorage.getItem("message")
-  //   if (message) {
-  //     const results = JSON.parse(message) as {
-  //       query: string
-  //       response: string | null
-  //     }[]
-  //     setMessage(results)
-  //   }
-  // }, [message])
+  const [searchData] = useSearchData()
 
   // const [searchResponse, setSearchResponse] = useState<SearchResults | null>(
   //   null
@@ -61,6 +50,7 @@ export default function ChatArea() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    // // fetch searchResults from localStorage
     // const searchResults = localStorage.getItem("searchResults")
     // // console.log(searchResults)
     // if (searchResults) {
@@ -68,25 +58,31 @@ export default function ChatArea() {
     //   setSearchResponse(JSON.parse(searchResults) as SearchResults)
     //   console.log(searchResponse)
 
+    //   // get title and snippets from searchResponse
     //   const titles = searchResponse?.map((item) => item.title)
     //   console.log(titles)
     //   const snippets = searchResponse?.map((item) => item.snippet)
     //   console.log(snippets)
     // }
 
-    const prompt = messageRef.current?.value
-    if (prompt !== undefined) {
-      setMessage([...message, { query: prompt, response: null }])
+    const titles = searchData?.map((item) => item.title)
+    const snippets = searchData?.map((item) => item.snippet)
+
+    const prompt = `You are given 10 articles with following titles ${titles} and following ${snippets} respectively. Try answering the following questions using the above data ${messageRef.current?.value}. If the above data is not sufficient to answer the question, you can do anything to answer the question.`
+
+    const initialPrompt = messageRef.current?.value
+    if (initialPrompt !== undefined) {
+      setMessage([...message, { query: initialPrompt, response: null }])
       if (messageRef.current) {
         messageRef.current.value = ""
       }
       // messageRef.current?.value ?? ""
     }
 
-    if (!prompt) {
+    if (!initialPrompt) {
       return
     }
-
+    console.log(prompt)
     const response = await fetch("/api/response", {
       method: "POST",
       headers: {
@@ -113,7 +109,7 @@ export default function ChatArea() {
     const decoder = new TextDecoder()
     let done = false
 
-    setMessage([...message, { query: prompt, response: null }])
+    setMessage([...message, { query: initialPrompt, response: null }])
 
     let currentResponse: string[] = []
     while (!done) {
@@ -123,7 +119,7 @@ export default function ChatArea() {
       currentResponse = [...currentResponse, chunkValue]
       setMessage([
         ...message,
-        { query: prompt, response: currentResponse.join("") },
+        { query: initialPrompt, response: currentResponse.join("") },
       ])
     }
     setIsLoading(false)
