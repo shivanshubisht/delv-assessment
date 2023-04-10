@@ -11,39 +11,41 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export default function SideSearch() {
-  const messageRef = useRef<HTMLInputElement>(null)
-  const [results, setResults] = useState<SearchResults | null>(null)
-  const [searchData, setSearchData] = useSearchData()
+    const messageRef = useRef<HTMLInputElement>(null)
+    const [results, setResults] = useState<SearchResults | null>(null)
+    const [data, setData] = useSearchData()
 
-  // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-  //   console.log(messageRef.current?.value)
-  // }
+    // const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    //   e.preventDefault()
+    //   console.log(messageRef.current?.value)
+    // }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
 
-    const responseResults = (await (
-      await fetch("/api/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: messageRef.current?.value,
-        }),
-      })
-    ).json()) as SearchResults
-    setResults(responseResults)
-    setSearchData(responseResults)
-    localStorage.setItem("searchResults", JSON.stringify(responseResults))
-    // console.log(responseResults)
-  }
+      const responseResults = (await (
+        await fetch("/api/search", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query: messageRef.current?.value,
+          }),
+        })
+      ).json()) as SearchResults
+      setResults(responseResults)
+      setData(responseResults)
+      localStorage.setItem("searchResults", JSON.stringify(responseResults))
+      // console.log(responseResults)
+    }
   return (
     <>
       {/* <div className="bg-gray-300/70 p-5 dark:bg-gray-950/70"> */}
       <div className="p-5">
-        <span className="inline-block pb-2 text-3xl font-semibold">Search</span>
+        <span className="hidden text-3xl font-semibold sm:inline-block">
+          Search
+        </span>
         <br></br>
         <span className="hidden pb-4 text-sm sm:inline-block">
           Search for articles in google scholar
@@ -56,7 +58,7 @@ export default function SideSearch() {
           </div>
         </form>
       </div>
-      <ScrollArea className="h-36 p-5 md:h-auto">
+      <ScrollArea className="p-5">
         {results !== null ? <ResultItems items={results} pathname="" /> : null}
       </ScrollArea>
     </>

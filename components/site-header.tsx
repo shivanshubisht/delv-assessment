@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
+import { MobileSearch } from "@/components/mobile-search"
 import { ModeToggle } from "@/components/mode-toggle"
 import { buttonVariants } from "@/components/ui/button"
 
@@ -15,7 +16,8 @@ export function SiteHeader() {
         <div className="container flex">
           <MainNav />
           <div className="flex flex-1 items-center justify-end space-x-2 sm:space-x-4">
-            <nav className="flex items-center space-x-3">
+            <nav className="flex items-center space-x-1">
+              <MobileSearch />
               <Link
                 target="_blank"
                 rel="noreferrer"
