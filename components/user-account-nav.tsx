@@ -17,6 +17,11 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "image" | "email">
 }
 
+const clearHistory = () => {
+  localStorage.removeItem("searchResults")
+  localStorage.removeItem("chatResults")
+}
+
 export function UserAccountNav({ user }: UserAccountNavProps) {
   return (
     <DropdownMenu>
@@ -39,13 +44,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/flights">Flights</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/hotels">Hotels</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/travel">Settings</Link>
+          <div onClick={clearHistory}>Clear History</div>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

@@ -12,6 +12,7 @@ export default function IndexPage() {
             <SideSearch />
           </aside>
           <main className="flex h-screen flex-col justify-between">
+            {/* @ts-expect-error async server component */}
             <SiteHeader />
             <ChatArea />
           </main>

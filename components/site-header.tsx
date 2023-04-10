@@ -27,7 +27,7 @@ export async function SiteHeader() {
                 href={siteConfig.links.github}
                 className={cn(buttonVariants)}
               >
-                <Icons.gitHub className="h-6 w-6" />
+                <Icons.gitHub className="hidden h-6 w-6 sm:block" />
               </Link>
               <ModeToggle />
               {user ? (

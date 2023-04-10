@@ -1,6 +1,7 @@
 "use client"
 
-import { Fragment, useRef, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
+import { type SearchResults } from "@/types/results"
 
 import Message from "@/components/message"
 import { ScrollArea } from "@/components/scroll-area"
@@ -17,6 +18,17 @@ export default function ChatArea() {
   >([])
   const [data, setData] = useSearchData()
   console.log(data)
+
+  // useEffect(() => {
+  //   const message = localStorage.getItem("message")
+  //   if (message) {
+  //     const results = JSON.parse(message) as {
+  //       query: string
+  //       response: string | null
+  //     }[]
+  //     setMessage(results)
+  //   }
+  // }, [message])
 
   // const [searchResponse, setSearchResponse] = useState<SearchResults | null>(
   //   null
@@ -50,7 +62,6 @@ export default function ChatArea() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // // fetch searchResults from localStorage
     // const searchResults = localStorage.getItem("searchResults")
     // // console.log(searchResults)
     // if (searchResults) {
@@ -58,7 +69,6 @@ export default function ChatArea() {
     //   setSearchResponse(JSON.parse(searchResults) as SearchResults)
     //   console.log(searchResponse)
 
-    //   // get title and snippets from searchResponse
     //   const titles = searchResponse?.map((item) => item.title)
     //   console.log(titles)
     //   const snippets = searchResponse?.map((item) => item.snippet)
@@ -122,7 +132,7 @@ export default function ChatArea() {
 
   return (
     <>
-      <ScrollArea>
+      <ScrollArea className={message.length === 0 ? "" : "flex flex-1"}>
         {/* if message is empty display ask here */}
         {message.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center">
